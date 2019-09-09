@@ -8,15 +8,57 @@
 " Individual settings can be reverted with ":set option&".
 " Other commands can be reverted as mentioned below.
 
+"nmap <F2> : NERDTreeToggle<CR>
+
+
+
+let g:tagbar_width=30
+map <F9> :TagbarToggle<CR>
+let g:tagbar_sort = 0
+
+" ----------------------------- Vundle Start -----------------------------
+set nocompatible
+filetype off
+
+map <F2> :NERDTreeToggle<CR>
+"set rtp+=~/.dotfiles/editor/vim/bundle/Vundle.vim
+set rtp+=${DOTFILES}/editor/vim/bundle/Vundle.vim
+call vundle#begin()
+"Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'https://github.com/kien/ctrlp.vim.git'
+Plugin 'https://github.com/scrooloose/nerdtree.git'
+"Plugin 'https://github.com/aperezdc/vim-template.git'
+Plugin 'https://github.com/Valloric/YouCompleteMe'
+Plugin 'https://github.com/majutsushi/tagbar.git'
+call vundle#end()
+filetype plugin indent on
+" ----------------------------- Vundle End   -----------------------------
+
+
+
+
+set laststatus=2
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]\ [qingchun,SYNS]
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+"imap {<CR> {<CR><CR>}<UP>"
+"imap [ [<SPACE>]<LEFT>"
+"imap ( (<SPACE>)<LEFT>  "
+
+
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
-  finish
+finish
 endif
 
 " Bail out if something that ran earlier, e.g. a system wide vimrc, does not
 " want Vim to use these default values.
 if exists('skip_defaults_vim')
-  finish
+finish
 endif
 
 " Use Vim settings, rather than Vi settings (much better!).
@@ -30,9 +72,12 @@ set history=200		" keep 200 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set wildmenu		" display completion matches in a status line
-
+set hls
+" hi Search cterm=NONE ctermfg=grey ctermbg=blue
+hi Search ctermbg=Grey
 set ttimeout		" time out for key codes
 set ttimeoutlen=100	" wait up to 100ms after Esc for special key
+set number
 
 " Show a few lines of context around the cursor.  Note that this makes the
 " text scroll if you mouse-click near the start or end of the window.
@@ -75,7 +120,7 @@ if &t_Co > 2 || has("gui_running")
 
   " I like highlighting strings inside C comments.
   " Revert with ":unlet c_comment_strings".
-  let c_comment_strings=1
+  let c_comment_strings=10
 endif
 
 " Only do this part when compiled with support for autocommands.
@@ -120,3 +165,5 @@ if has('langmap') && exists('+langremap')
   " compatible).
   set nolangremap
 endif
+au BufNewFile,BufRead *.mlir set filetype=c
+

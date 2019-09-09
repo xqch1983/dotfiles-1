@@ -7,7 +7,13 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
+#ZSH_THEME="nicoulaj.zsh-theme"
+#ZSH_THEME="random"
+ZSH_THEME="eastwood"
+#ZSH_THEME="dracula"
+#ZSH_THEME="ys"
+
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -39,8 +45,10 @@ ZSH_THEME="robbyrussell"
 # much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to skip verify whether the directory
-# used to store completion dump file is secure or not.
+#DRACULA_DISPLAY_CONTEXT=1
+#DRACULA_DISPLAY_TIME=1
+# Uncomment the following line if you want to skip verify whether the directory used to store
+# completion dump file is secure or not.
 ZSH_DISABLE_COMPFIX="true"
 
 # Uncomment the following line if you want to change the command execution time
@@ -55,10 +63,14 @@ ZSH_DISABLE_COMPFIX="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-docker-aliases)
+#plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-docker-aliases)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
-
+#bindkey '^ ' autosuggest-accept
+#bindkey -M emacs '^P' history-substring-search-up
+#bindkey -M emacs '^N' history-substring-search-down
+#export PATH=$PATH:~/.dotfiles/bin
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -76,32 +88,19 @@ LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 
 # Setting the full path of our dotfiles directory automatically.
-# This script can be executed through 3 different ways.
-# - Executed directly by shell through symbolic link(e.g., ~/.zshrc -> zshrc)
-# - sourced by other script through symbolic link(e.g., source ~/.zshrc)
-# - sourced by other script directly(e.g., source zshrc)
-# Below line of code can get the full path of this script no matter how this
-# script is executed.
-SHRC=${(%):-%x}
-# Resolve the real path of this script, if it is a symbolic link.
-while [[ -L ${SHRC} ]]; do
-    SHRC=`dirname ${SHRC}`/`readlink ${SHRC}`
-done
-OLD_DIR=`pwd`; cd `dirname ${SHRC}`/../..; unset SHRC
-export DOTFILES=`pwd`
+OLD_DIR=`pwd`; cd ${HOME}
+cd $(dirname $(readlink ~/.zshrc))/../..; export DOTFILES=`pwd`
 cd ${OLD_DIR}; unset OLD_DIR
 
-# Load common alias firstly, so alias like "addenvfront" can be used immediately
-# from here.
+# Load common alias firstly, so alias like "addenvfront" can be used immediately from here.
 source ${DOTFILES}/shell/zsh/alias.zsh
 
 # Load common environment variables setting such as EDITOR, PATH and so on.
 source ${DOTFILES}/shell/zsh/env.zsh
 
-# Put local runtime configurations in ~/.local.zshrc, they'll stay out of your
-# main dotfiles repository (which maybe public on the internet, like this one).
-# Anything can be done safely, because this is the last runtime configuration
-# file current shell will load.
+# Put local runtime configurations in ~/.local.zshrc, they'll stay out of your main dotfiles
+# repository (which maybe public on the internet, like this one). Anything can be done safely,
+# because this is the last runtime configuration file current shell will load.
 if [[ -a ~/.local.zshrc ]]; then
     source ~/.local.zshrc
 fi
